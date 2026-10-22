@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="{{ idioma }}">
+<head>
+<meta charset="utf-8">
+<title>{{ nombre }}</title>
+<link rel="stylesheet" href="cv.css">
+<style>
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .carta p { margin: 0 0 9pt; }
+  .carta { margin-top: 18pt; }
+</style>
+</head>
+<body>
+<header>
+  <h1>{{ nombre }}</h1>
+  <p class="titular">{{ titular }}</p>
+  <p class="contacto">{% for dato in contacto %}{{ dato }}{% if not loop.last %} · {% endif %}{% endfor %}</p>
+  {% if linkedin %}<p class="contacto"><a href="{{ linkedin }}">{{ linkedin | replace("https://www.", "") }}</a></p>{% endif %}
+</header>
+<section class="carta">
+  {% for p in parrafos %}<p>{{ p }}</p>{% endfor %}
+</section>
+</body>
+</html>

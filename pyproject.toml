@@ -1,0 +1,40 @@
+[project]
+name = "mcp-chamba"
+version = "0.1.0"
+description = "Servidor MCP de búsqueda de empleo: ofertas, ajuste al perfil, hoja de vida adaptada y seguimiento."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Yeison Rey" }]
+requires-python = ">=3.12"
+keywords = ["mcp", "model-context-protocol", "claude", "job-search", "empleo", "cv"]
+dependencies = [
+    "mcp>=2.3,<3",
+    "httpx>=0.27",
+    "pyyaml>=6",
+    "jinja2>=3.1",
+    "weasyprint>=62",
+]
+
+[project.urls]
+Repository = "https://github.com/yrey420/MCP-CHAMBA"
+
+[project.scripts]
+empleo-mcp = "empleo.servidor:main"
+mcp-chamba = "empleo.servidor:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["empleo"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100

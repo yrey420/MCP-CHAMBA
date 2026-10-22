@@ -1,0 +1,35 @@
+# --- Datos personales: NUNCA se suben -------------------------------------------
+# Tu perfil real y las empresas que sigues (usa los *.example.yaml como plantilla).
+perfil/*
+!perfil/*.example.yaml
+# Base de ofertas y postulaciones.
+datos/
+*.db
+*.sqlite
+*.sqlite3
+# Hojas de vida, cartas y carpetas de postulación generadas.
+salida/
+*.pdf
+# Secretos.
+.env
+.env.*
+!.env.example
+
+# --- Python / herramientas ------------------------------------------------------
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+*.log
+
+# --- Editores / sistema ---------------------------------------------------------
+.vscode/
+.idea/
+.DS_Store

@@ -1,0 +1,107 @@
+/* Sobria y legible: una columna, texto real, un solo color de acento. */
+@page {
+  size: letter;
+  margin: 1.6cm 1.7cm 1.5cm;
+}
+
+:root {
+  --tinta: #1d2330;
+  --suave: #5a6170;
+  --acento: #1f4e79;
+  --linea: #cfd5df;
+}
+
+body {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 9.6pt;
+  line-height: 1.38;
+  color: var(--tinta);
+}
+
+h1 {
+  font-size: 19pt;
+  margin: 0;
+}
+
+.titular {
+  font-size: 11pt;
+  color: var(--acento);
+  font-weight: 600;
+  margin: 2pt 0 4pt;
+}
+
+.contacto {
+  color: var(--suave);
+  font-size: 8.8pt;
+  margin: 0;
+}
+
+a {
+  color: var(--acento);
+  text-decoration: none;
+}
+
+h2 {
+  font-size: 10pt;
+  text-transform: uppercase;
+  /* Sin espaciado entre letras: los ATS leerían «E X P E R I E N C I A». */
+  color: var(--acento);
+  border-bottom: 0.8pt solid var(--linea);
+  padding-bottom: 2pt;
+  margin: 12pt 0 5pt;
+}
+
+h3 {
+  font-size: 10pt;
+  margin: 0;
+}
+
+p {
+  margin: 0 0 4pt;
+}
+
+ul {
+  margin: 2pt 0 0;
+  padding-left: 12pt;
+}
+
+li {
+  margin-bottom: 2.2pt;
+}
+
+ul.habilidades {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul.habilidades li {
+  margin-bottom: 1.5pt;
+}
+
+article {
+  margin-bottom: 8pt;
+  page-break-inside: avoid;
+}
+
+article.proyecto {
+  margin-bottom: 5pt;
+}
+
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8pt;
+}
+
+.fechas {
+  color: var(--suave);
+  font-size: 8.8pt;
+  white-space: nowrap;
+}
+
+.contexto {
+  color: var(--suave);
+  font-style: italic;
+  margin: 1pt 0 2pt;
+}

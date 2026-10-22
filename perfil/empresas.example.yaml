@@ -1,0 +1,17 @@
+# Portales de empleo de empresas que se revisan en cada búsqueda.
+#
+# No hace falta editarlo a mano: la herramienta seguir_empresa crea y actualiza
+# perfil/empresas.yaml (que está en .gitignore). Este archivo solo muestra el formato.
+#
+#   ats: greenhouse  → https://boards.greenhouse.io/<slug>
+#   ats: lever       → https://jobs.lever.co/<slug>
+#   ats: ashby       → https://jobs.ashbyhq.com/<slug>
+#
+# Para usarlo tal cual: cp perfil/empresas.example.yaml perfil/empresas.yaml
+empresas:
+- nombre: GitLab
+  ats: greenhouse
+  slug: gitlab
+- nombre: Acme (ejemplo)
+  ats: lever
+  slug: acme

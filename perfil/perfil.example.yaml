@@ -1,0 +1,153 @@
+# PERFIL FICTICIO DE EJEMPLO. Alex Ejemplo no existe: todos los datos son inventados.
+#
+# Cópialo y pon tus datos reales (perfil/perfil.yaml está en .gitignore y nunca se sube):
+#
+#     cp perfil/perfil.example.yaml perfil/perfil.yaml
+#
+# Es la única fuente de verdad: de aquí salen las hojas de vida, las cartas y todo lo que el
+# asistente dice de ti. Las herramientas rechazan textos con cifras que no aparezcan aquí.
+#
+# Los textos van en español (es) y en inglés (en); un texto "es|en" también vale. Las
+# "etiquetas" de cada logro sirven para elegir qué mostrar primero según la oferta:
+# backend, integraciones, ia, erp, devops, seguridad, datos, frontend, liderazgo.
+
+datos:
+  nombre: Alex Ejemplo Prueba
+  nombre_corto: Alex Ejemplo          # se usa en el nombre de los PDF: CV-Alex-Ejemplo-EN.pdf
+  ciudad: { es: "Manizales, Colombia · Remoto (UTC-5)", en: "Manizales, Colombia · Remote (UTC-5)" }
+  telefono: "+57 300 000 0000"
+  correo: alex.ejemplo@example.com
+  linkedin: https://www.linkedin.com/in/alex-ejemplo
+  github: https://github.com/alex-ejemplo   # opcional
+  idiomas:
+    - { es: "Español (nativo)", en: "Spanish (native)" }
+    - { es: "Inglés B2", en: "English B2" }
+
+objetivo:
+  roles: [Backend, Full-stack, Integraciones]
+  modalidades: [Remoto internacional, Remoto en Colombia, Híbrido]
+  disponibilidad: Inmediata
+  contratista_independiente: true
+  # ciudad: Manizales        # opcional; si no está, se toma de datos.ciudad (antes de la coma)
+  salario:
+    # Rango mensual en pesos colombianos. Sirve para marcar ofertas que pagan menos.
+    expectativa_dicha_cop_mes: [7000000, 9000000]
+  # Búsquedas que hace la guía "rutina_diaria".
+  busquedas: ["python django", "backend python", "java spring boot", "integrations"]
+
+# Opcional: qué tecnologías dominas y cuáles son tus lenguajes principales. Las claves son las
+# de TECNOLOGIAS en empleo/vocabulario.py. Si no lo pones, se usa un perfil backend Python/Java.
+# vocabulario:
+#   domina: [python, django, drf, postgresql, rest, docker, aws, pruebas, cicd]
+#   lenguajes: [python]
+
+titular:
+  es: Ingeniero de Software Backend · APIs, integraciones y SaaS
+  en: Backend Software Engineer · APIs, Integrations & SaaS
+
+resumen:
+  es: >-
+    Ingeniero de software backend con más de 6 años construyendo APIs, integraciones y
+    plataformas SaaS. En Acme SaaS llevé más de 40 endpoints de segundos a milisegundos en una
+    plataforma con más de 80 clientes y 20.000 usuarios activos al día, y automaticé pruebas y
+    despliegues. Python/Django y Java/Spring Boot.
+  en: >-
+    Backend software engineer with 6+ years building APIs, integrations and SaaS platforms. At
+    Acme SaaS I brought 40+ endpoints from seconds to milliseconds on a platform with 80+
+    customers and 20,000 daily active users, and automated testing and deployments.
+    Python/Django and Java/Spring Boot.
+
+habilidades:
+  - grupo: { es: Backend, en: Backend }
+    items: [Python, Django, Django REST Framework, Java, Spring Boot, Node.js]
+  - grupo: { es: APIs e integraciones, en: APIs & integrations }
+    items: [REST, GraphQL, Webhooks, OAuth2]
+  - grupo: { es: Datos, en: Data }
+    items: [PostgreSQL, MySQL, Redis, "Optimización de consultas|Query tuning"]
+  - grupo: { es: DevOps, en: DevOps }
+    items: [Docker, CI/CD, AWS, Linux]
+  - grupo: { es: IA, en: AI }
+    items: [LLMs, RAG, MCP (Model Context Protocol)]
+
+experiencia:
+  - empresa: Acme SaaS S.A.S.
+    cargo: { es: Ingeniero de Software Backend, en: Backend Software Engineer }
+    inicio: 2023-02
+    # sin "fin": trabajo actual
+    contexto:
+      es: Plataforma SaaS multi-tenant de facturación con más de 80 clientes.
+      en: Multi-tenant invoicing SaaS platform with 80+ customers.
+    logros:
+      - etiquetas: [backend, datos]
+        es: >-
+          Optimicé más de 40 endpoints, que pasaron de responder en segundos a milisegundos,
+          afinando consultas e índices.
+        en: >-
+          Optimized 40+ endpoints from multi-second to millisecond response times by tuning
+          queries and indexes.
+      - etiquetas: [devops, liderazgo]
+        es: Implementé pruebas automatizadas (pytest) y despliegue continuo con Docker y CI/CD.
+        en: Introduced automated testing (pytest) and continuous delivery with Docker and CI/CD.
+      - etiquetas: [integraciones]
+        es: Construí conectores REST y GraphQL con OAuth2 y reintentos con backoff.
+        en: Built REST and GraphQL connectors with OAuth2 and exponential-backoff retries.
+      - etiquetas: [ia]
+        es: Puse en producción un asistente con RAG que responde preguntas de soporte.
+        en: Shipped a RAG-based assistant that answers support questions.
+
+  - empresa: Ejemplo Software Ltda.
+    cargo: { es: Desarrollador de Software, en: Software Developer }
+    inicio: 2019-03
+    fin: 2023-01
+    contexto:
+      es: Software a la medida para empresas medianas.
+      en: Custom software for mid-sized companies.
+    logros:
+      - etiquetas: [backend, erp]
+        es: Desarrollé módulos de inventario y nómina en Java y Spring Boot.
+        en: Built inventory and payroll modules in Java and Spring Boot.
+      - etiquetas: [backend, frontend]
+        es: Migré una aplicación heredada a Django y React por fases, sin interrumpir el servicio.
+        en: Migrated a legacy application to Django and React in phases, with zero downtime.
+
+proyectos:
+  # incluir: false lo deja fuera de la hoja de vida.
+  - nombre: Agenda Bot
+    incluir: true
+    fechas: { es: "2025 – presente", en: "2025 – present" }
+    tipo: { es: Proyecto personal, en: Side project }
+    etiquetas: [ia, backend]
+    es: Bot de citas por WhatsApp con Django y un LLM que valida cada reserva contra la agenda.
+    en: WhatsApp booking bot built with Django and an LLM that validates each booking against the calendar.
+
+educacion:
+  - titulo: { es: Ingeniería de Sistemas, en: B.Sc. Systems Engineering }
+    institucion: Universidad de Ejemplo
+    fechas: 2014 – 2019
+
+# Historias para entrevistas (formato STAR: situación, tarea, acción, resultado).
+historias:
+  - titulo: De segundos a milisegundos
+    situacion: Más de 40 endpoints tardaban segundos con 20.000 usuarios diarios.
+    tarea: Bajar los tiempos sin romper la compatibilidad.
+    accion: Afiné consultas e índices y devolví solo los campos necesarios.
+    resultado: Respuestas en milisegundos y menos carga en la base de datos.
+
+# Cómo contar la salida del último empleo, si preguntan (opcional).
+salida_ultimo_empleo:
+  es: >-
+    "Busco un equipo donde pueda crecer en arquitectura backend y trabajar con clientes
+    internacionales."
+  en: >-
+    "I'm looking for a team where I can grow in backend architecture and work with
+    international customers."
+  reglas:
+    - Corto, neutral y mirando hacia adelante. No hablar mal de la empresa.
+
+# Reglas que el asistente debe respetar siempre (confidencialidad, temas que no tocar…).
+reglas_para_el_asistente:
+  - No menciones los nombres de los clientes de Acme SaaS (acuerdo de confidencialidad).
+
+# Notas y decisiones tuyas que el asistente debe conocer (opcional).
+decisiones:
+  - "Acepta turnos de guardia (on-call) si el rol lo pide."

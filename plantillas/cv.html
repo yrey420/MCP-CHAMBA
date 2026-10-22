@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="{{ idioma }}">
+<head>
+<meta charset="utf-8">
+<title>{{ nombre }} — CV</title>
+<link rel="stylesheet" href="cv.css">
+</head>
+<body>
+<header>
+  <h1>{{ nombre }}</h1>
+  <p class="titular">{{ titular }}</p>
+  <p class="contacto">{% for dato in contacto %}{{ dato }}{% if not loop.last %} · {% endif %}{% endfor %}</p>
+  <p class="contacto">
+    {% if linkedin %}<a href="{{ linkedin }}">{{ linkedin | replace("https://www.", "") }}</a>{% endif %}
+    {% if github %} · <a href="{{ github }}">{{ github | replace("https://", "") }}</a>{% endif %}
+  </p>
+</header>
+
+<section>
+  <h2>{{ t.resumen }}</h2>
+  <p>{{ resumen }}</p>
+</section>
+
+<section>
+  <h2>{{ t.habilidades }}</h2>
+  <ul class="habilidades">
+    {% for h in habilidades %}
+    <li><strong>{{ h.grupo }}:</strong> {{ h["items"] | join(", ") }}</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section>
+  <h2>{{ t.experiencia }}</h2>
+  {% for e in experiencia %}
+  <article>
+    <div class="encabezado">
+      <h3>{{ e.cargo }} — {{ e.empresa }}</h3>
+      <span class="fechas">{{ e.fechas }}</span>
+    </div>
+    {% if e.contexto %}<p class="contexto">{{ e.contexto }}</p>{% endif %}
+    <ul>
+      {% for logro in e.logros %}<li>{{ logro }}</li>{% endfor %}
+    </ul>
+  </article>
+  {% endfor %}
+</section>
+
+{% if proyectos %}
+<section>
+  <h2>{{ t.proyectos }}</h2>
+  {% for p in proyectos %}
+  <article class="proyecto">
+    <div class="encabezado">
+      <h3>{{ p.nombre }} — {{ p.tipo }}</h3>
+      {% if p.fechas %}<span class="fechas">{{ p.fechas }}</span>{% endif %}
+    </div>
+    <p>{{ p.texto }}</p>
+  </article>
+  {% endfor %}
+</section>
+{% endif %}
+
+<section>
+  <h2>{{ t.educacion }}</h2>
+  {% for e in educacion %}
+  <div class="encabezado">
+    <h3>{{ e.titulo }} — {{ e.institucion }}</h3>
+    <span class="fechas">{{ e.fechas }}</span>
+  </div>
+  {% endfor %}
+  <p>{{ idiomas | join(" · ") }}</p>
+</section>
+</body>
+</html>
