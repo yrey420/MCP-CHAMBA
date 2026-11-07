@@ -80,10 +80,10 @@ def resumen_para_el_agente(perfil: dict) -> dict:
     return {
         "nombre": perfil["datos"]["nombre"],
         "contacto": {
-            "ciudad": texto(perfil["datos"]["ciudad"]),
-            "correo": perfil["datos"]["correo"],
-            "telefono": perfil["datos"]["telefono"],
-            "linkedin": perfil["datos"]["linkedin"],
+            "ciudad": texto(perfil["datos"].get("ciudad")),
+            "correo": perfil["datos"].get("correo"),
+            "telefono": perfil["datos"].get("telefono"),
+            "linkedin": perfil["datos"].get("linkedin"),
         },
         "idiomas": [texto(i) for i in perfil["datos"]["idiomas"]],
         "objetivo": perfil["objetivo"],
@@ -118,5 +118,7 @@ def resumen_para_el_agente(perfil: dict) -> dict:
         "historias": perfil.get("historias", []),
         "salida_ultimo_empleo": salida_ultimo_empleo(perfil),
         "reglas_para_el_asistente": perfil.get("reglas_para_el_asistente", []),
+        "cualidades": perfil.get("cualidades", []),
+        "pendientes": perfil.get("pendientes", []),
         "decisiones": perfil.get("decisiones", []),
     }

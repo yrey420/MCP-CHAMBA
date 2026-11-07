@@ -1,8 +1,9 @@
 """Servidor MCP de búsqueda de empleo (MCP Chamba).
 
-Se conecta a Claude Code por stdio:
+Se conecta a Claude Code por stdio, una conexión por persona:
 
     claude mcp add --scope user empleo -- uv run --directory /ruta/a/MCP-CHAMBA empleo-mcp
+    claude mcp add --scope user empleo-ana -e EMPLEO_PERSONA=ana -- uv run --directory /ruta/a/MCP-CHAMBA empleo-mcp
 
 El envío de cada postulación lo hace la persona: aquí se busca, se califica, se
 prepara la hoja de vida y la carta, y se lleva el seguimiento.
@@ -23,7 +24,7 @@ import yaml
 from mcp.server.mcpserver import MCPServer
 from pydantic import Field
 
-from empleo import ajuste, cv, fuentes, rutas, vocabulario
+from empleo import ajuste, cv, fuentes, rutas
 from empleo.base import ABIERTOS, ESTADOS, Base
 from empleo.perfil import (
     anios_de_experiencia,
@@ -62,11 +63,13 @@ BUSQUEDAS_DIARIAS = [
 
 
 def _instrucciones() -> str:
-    """Las instrucciones fijas más las reglas propias del perfil, si hay uno."""
+    """Las instrucciones fijas (o las del campo `instrucciones` del perfil, si las trae) más
+    las reglas propias del perfil."""
     try:
         perfil = cargar()
     except (OSError, ValueError, yaml.YAMLError):
         return INSTRUCCIONES
+    base = str(perfil.get("instrucciones") or "").strip() or INSTRUCCIONES.rstrip()
     reglas = list(perfil.get("reglas_para_el_asistente") or [])
     salida = salida_ultimo_empleo(perfil)
     if isinstance(salida, dict):
@@ -78,10 +81,13 @@ def _instrucciones() -> str:
         )
     if reglas:
         extra += "\nReglas del perfil:\n" + "\n".join(f"- {r}" for r in reglas)
-    return INSTRUCCIONES + extra + "\n"
+    return base + "\n" + extra + "\n"
 
 
-servidor = MCPServer(name="empleo", instructions=_instrucciones())
+servidor = MCPServer(
+    name=f"empleo-{rutas.PERSONA}" if rutas.PERSONA else "empleo",
+    instructions=_instrucciones(),
+)
 
 
 # --- Apoyo ---------------------------------------------------------------------------------
@@ -100,7 +106,6 @@ def _analizar(oferta: fuentes.Oferta, perfil: dict) -> ajuste.Analisis:
     salario = ajuste.salario_mensual_usd(
         oferta.salario_min, oferta.salario_max, oferta.moneda, oferta.periodo
     )
-    domina, lenguajes = vocabulario.del_perfil(perfil)
     return ajuste.evaluar(
         titulo=oferta.titulo,
         descripcion=oferta.descripcion,
@@ -111,8 +116,7 @@ def _analizar(oferta: fuentes.Oferta, perfil: dict) -> ajuste.Analisis:
         anios_experiencia=anios_de_experiencia(perfil),
         idioma=oferta.idioma,
         ciudad=ciudad_base(perfil),
-        domina=domina,
-        lenguajes=lenguajes,
+        reglas=ajuste.reglas_de(perfil),
     )
 
 
@@ -575,6 +579,7 @@ def preparar_entrevista(oferta_id: str) -> dict:
         "coinciden": analisis.get("coinciden"),
         "faltan": analisis.get("faltan"),
         "historias": perfil.get("historias", []),
+        "cualidades": perfil.get("cualidades", []),
         "salida_ultimo_empleo": salida_ultimo_empleo(perfil),
         "reglas_para_el_asistente": perfil.get("reglas_para_el_asistente", []),
         "salario_de_la_oferta_usd_mes": analisis.get("salario_usd_mes"),
@@ -671,7 +676,12 @@ async def seguir_empresa(
 @servidor.prompt()
 def rutina_diaria() -> str:
     """La búsqueda del día: seguimientos, ofertas nuevas y qué preparar."""
-    busquedas = (_perfil().get("objetivo") or {}).get("busquedas") or BUSQUEDAS_DIARIAS
+    perfil = _perfil()
+    busquedas = (
+        (perfil.get("objetivo") or {}).get("busquedas")
+        or perfil.get("busquedas")
+        or BUSQUEDAS_DIARIAS
+    )
     return (
         "Haz mi rutina de búsqueda de empleo:\n"
         "1. ver_postulaciones: dime qué seguimientos están vencidos y redacta un mensaje corto "

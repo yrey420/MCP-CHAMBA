@@ -41,6 +41,36 @@ objetivo:
 #   domina: [python, django, drf, postgresql, rest, docker, aws, pruebas, cicd]
 #   lenguajes: [python]
 
+# Opcional, para cualquier oficio: tus propias reglas de ajuste. Si está, reemplaza las reglas
+# predeterminadas de backend (y la sección vocabulario). Cada habilidad lleva una expresión
+# regular (sin tildes y en minúsculas), si la dominas o a cuál de las tuyas se parece.
+# ajuste:
+#   habilidades:
+#     servicio: { patron: "customer (service|support)|atencion al cliente", nombre: servicio al cliente, domina: true }
+#     disputas: { patron: "chargebacks?|disputes?|contracargos?", nombre: disputas, domina: true }
+#     salesforce: { patron: "salesforce", nombre: Salesforce, domina: true }
+#     zendesk: { patron: "zendesk", nombre: Zendesk, pariente: salesforce }
+#     ingles: { patron: "\\benglish\\b|\\bingles\\b", nombre: inglés, domina: true }
+#     portugues: { patron: "portuguese|portugues", nombre: portugués }
+#   idiomas: { suyos: [ingles], ajenos: [portugues], texto: "Pide {}, un idioma que no manejas." }
+#   etiquetas: { servicio: [servicio, salesforce, zendesk], cumplimiento: [disputas] }
+#   etiqueta_base: servicio          # la que siempre va en la hoja de vida
+#   rol:
+#     fuerte: "specialist|analyst|agent|especialista|analista|asesor"
+#     generico: "assistant|associate|asistente|auxiliar"
+#     otro: "engineer|developer|ingenier|desarrollador"
+#     texto_fuerte: "El rol es de oficina y servicio: lo tuyo."
+#     texto_otro: "El rol no es de oficina ni de servicio."
+#   nivel:
+#     niveles:                       # el primero que coincide con el título manda
+#       - { patron: "\\bjunior\\b|entry[- ]level", puntos: 4, texto: "Es de nivel inicial." }
+#       - { patron: "\\bsenior\\b|\\bsr\\b", puntos: 10 }
+#     otro: 10
+
+# Opcional: instrucciones propias para el asistente (reemplazan las generales del servidor).
+# instrucciones: >-
+#   Herramientas para que Alex consiga empleo de backend...
+
 titular:
   es: Ingeniero de Software Backend · APIs, integraciones y SaaS
   en: Backend Software Engineer · APIs, Integrations & SaaS

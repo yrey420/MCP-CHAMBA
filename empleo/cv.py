@@ -136,11 +136,7 @@ def preparar(
         "t": TEXTOS[idioma],
         "nombre": datos["nombre"],
         "titular": titular or texto(perfil["titular"], idioma),
-        "contacto": [
-            texto(datos["ciudad"], idioma),
-            datos["telefono"],
-            datos["correo"],
-        ],
+        "contacto": _contacto(datos, idioma),
         "linkedin": datos.get("linkedin"),
         "github": datos.get("github"),
         "resumen": resumen or texto(perfil["resumen"], idioma),
@@ -163,6 +159,12 @@ def preparar(
         ],
         "idiomas": [texto(i, idioma) for i in datos["idiomas"]],
     }
+
+
+def _contacto(datos: dict, idioma: str) -> list[str]:
+    """Ciudad, teléfono y correo, sin los que el perfil no trae."""
+    valores = [texto(datos.get("ciudad"), idioma), datos.get("telefono"), datos.get("correo")]
+    return [v for v in valores if v]
 
 
 def _entorno() -> Environment:
@@ -204,11 +206,7 @@ def generar_carta(perfil: dict, salida: Path, cuerpo: str, idioma: str = "es") -
             idioma=idioma,
             nombre=datos["nombre"],
             titular=texto(perfil["titular"], idioma),
-            contacto=[
-                texto(datos["ciudad"], idioma),
-                datos["telefono"],
-                datos["correo"],
-            ],
+            contacto=_contacto(datos, idioma),
             linkedin=datos.get("linkedin"),
             parrafos=[p.strip() for p in cuerpo.strip().split("\n\n") if p.strip()],
         )

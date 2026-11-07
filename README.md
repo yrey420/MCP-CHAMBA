@@ -161,6 +161,9 @@ Secciones principales (el ejemplo trae comentarios en cada una):
 | `datos` | Nombre, ciudad, teléfono, correo, LinkedIn, GitHub, idiomas. Van en el encabezado de la hoja de vida y la carta; `nombre_corto` nombra los PDF (`CV-Alex-Ejemplo-EN.pdf`). |
 | `objetivo` | Roles, modalidades, disponibilidad, `salario.expectativa_dicha_cop_mes` (para marcar ofertas que pagan menos), `busquedas` de la rutina diaria y `ciudad` (opcional). |
 | `vocabulario` | Opcional: `domina` y `lenguajes` (claves de `empleo/vocabulario.py`) si tu stack no es backend Python/Java. |
+| `ajuste` | Opcional, para cualquier oficio (no solo software): tus propias habilidades con su expresión regular, idiomas, etiquetas, qué roles te sirven y cómo pesa el nivel. Reemplaza las reglas predeterminadas de backend. Ver el ejemplo comentado en `perfil/perfil.example.yaml`. |
+| `instrucciones` | Opcional: reemplaza las instrucciones generales del servidor (las reglas del perfil se siguen agregando). |
+| `cualidades`, `pendientes` | Opcional: cualidades personales para cartas y entrevistas, y datos que faltan por confirmar. |
 | `titular`, `resumen` | Versiones generales en español (`es`) e inglés (`en`). |
 | `habilidades` | Grupos de habilidades para la hoja de vida. |
 | `experiencia` | Empleos con `logros`; cada logro en `es`/`en` y con `etiquetas` (`backend`, `integraciones`, `ia`, `erp`, `devops`, `seguridad`, `datos`, `frontend`, `liderazgo`) para ordenarlos según la oferta. |
@@ -185,8 +188,21 @@ Por defecto todo vive dentro de la carpeta del proyecto. Puedes guardar tus dato
 | `EMPLEO_EMPRESAS` | `perfil/empresas.yaml` | Portales de empresas seguidas. |
 | `EMPLEO_SALIDA` | `salida/` | Hojas de vida generales y una carpeta por postulación (`salida/postulaciones/AAAA-MM-DD-empresa-cargo/`). |
 | `EMPLEO_BASE` | `datos/empleo.db` | Base SQLite de ofertas, postulaciones e historial. |
+| `EMPLEO_PERSONA` | (vacía) | Otra persona con el mismo código: con `ana` usa `perfil/ana/perfil.yaml`, `perfil/ana/empresas.yaml`, `salida/ana/` y `datos/ana.db`. Las variables de arriba siguen mandando. |
 
 No se necesitan claves ni tokens: todas las fuentes son públicas.
+
+### 4. Varias personas (opcional)
+
+El mismo código puede atender a varias personas sin mezclar sus datos. Crea `perfil/<persona>/perfil.yaml`
+(si no es de software, agrégale la sección `ajuste`) y registra una conexión por persona:
+
+```bash
+claude mcp add --scope user empleo-ana -e EMPLEO_PERSONA=ana -- uv run --directory /ruta/absoluta/a/MCP-CHAMBA empleo-mcp
+EMPLEO_PERSONA=ana uv run python generar_cv.py --idioma es
+```
+
+En Claude Code sus herramientas salen como `empleo-ana`.
 
 ## Conectarlo a Claude
 
@@ -276,11 +292,14 @@ razones, que acompañan cada resultado:
 
 | Parte | Peso | Cómo |
 | --- | --- | --- |
-| Tecnologías | 45 | Las que pide y dominas cuentan entero; las "parecidas" (FastAPI si sabes Django, Vue si sabes React…) cuentan a medias. Con menos de 4 tecnologías detectadas no se infla el puntaje. |
+| Habilidades | 45 | Las que pide y dominas cuentan entero; las "parecidas" (FastAPI si sabes Django, Vue si sabes React…) cuentan a medias. Con menos de 4 tecnologías detectadas no se infla el puntaje. |
 | Rol | 25 | Backend, full-stack, integraciones o IA puntúan alto; frontend, móvil, QA, ventas, etc., no. |
 | Nivel | 10 | Senior / semi-senior suma; lead / staff es "un paso arriba"; junior resta. |
 | Ubicación | 20 | Remoto que acepta Colombia / LATAM / mundial suma; "solo EE. UU.", W-2 o *security clearance* resta 25; presencial fuera de tu ciudad suma poco. |
 | En contra | — | Lenguaje principal ajeno (Go, .NET, Ruby…) −20; muchos más años de experiencia de los que tienes −8; paga menos de tu expectativa −10. |
+
+Esas son las reglas predeterminadas (un perfil backend). Con la sección `ajuste` del perfil, las
+habilidades, los roles, los niveles y los idiomas que cuentan son los tuyos.
 
 Al cambiar las reglas, sube `ajuste.VERSION`: las ofertas guardadas se vuelven a calificar solas.
 
